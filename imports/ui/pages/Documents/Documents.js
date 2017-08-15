@@ -13,7 +13,7 @@ import './Documents.scss';
 
 const handleRemove = (documentId) => {
   if (confirm('Are you sure? This is permanent!')) {
-    Meteor.call('documents.remove', documentId, (error) => {
+    Meteor.call('documents.remove', {documentId}, (error) => {
       if (error) {
         Bert.alert(error.reason, 'danger');
       } else {

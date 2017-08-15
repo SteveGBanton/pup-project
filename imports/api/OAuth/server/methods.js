@@ -2,11 +2,14 @@ import { Meteor } from 'meteor/meteor';
 import { check } from 'meteor/check';
 import { ServiceConfiguration } from 'meteor/service-configuration';
 import rateLimit from '../../../modules/rate-limit';
+import { ValidatedMethod } from 'meteor/mdg:validated-method';
 
-Meteor.methods({
-  'oauth.verifyConfiguration': function oauthVerifyConfiguration(services) {
-    check(services, Array);
-
+export const oauthVerifyConfigurationMethod = new ValidatedMethod({
+  name: 'oauth.verifyConfiguration',
+  validate: new SimpleSchema({
+    services: { type: [String] }
+  }).validator(),
+  run({services}) {
     try {
       const verifiedServices = [];
       services.forEach((service) => {
@@ -18,8 +21,8 @@ Meteor.methods({
     } catch (exception) {
       throw new Meteor.Error('500', exception);
     }
-  },
-});
+  }
+})
 
 rateLimit({
   methods: [

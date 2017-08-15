@@ -26,7 +26,7 @@ const verifiedServices = new ReactiveVar([]);
 
 export default createContainer(({ services }) => {
   if (!verificationComplete.get()) {
-    Meteor.call('oauth.verifyConfiguration', services, (error, response) => {
+    Meteor.call('oauth.verifyConfiguration', {services}, (error, response) => {
       if (error) {
         console.warn(error);
       } else {

@@ -30,7 +30,7 @@ const pageContent = new ReactiveVar('');
 export default createContainer(({ content, page }) => {
   window.scrollTo(0, 0); // Force window to top of page.
 
-  Meteor.call('utility.getPage', page, (error, response) => {
+  Meteor.call('utility.getPage', {page}, (error, response) => {
     if (error) {
       console.warn(error);
     } else {
